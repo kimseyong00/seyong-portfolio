@@ -1,0 +1,412 @@
+:root {
+  --W: 1920px;
+  --H: 1080px;
+  --sx: 1;
+  --sy: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #00c8ff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ✅ 전체화면 꽉 채움(stretch) */
+.page-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--W);
+  height: var(--H);
+  transform: scale(var(--sx), var(--sy));
+  transform-origin: 0 0;
+  overflow: hidden;
+}
+
+.page-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.app {
+  position: absolute;
+  inset: 0;
+}
+
+/* ===== MAP CARD ===== */
+.map-card {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  width: 969px;
+  height: 1020px;
+  border-radius: 60px;
+  overflow: hidden;
+  display: flex;
+  background: transparent;
+}
+
+/* 왼쪽 패널 */
+.map-side-panel {
+  width: 370px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #dde6f5;
+  background: #f8fbff;
+}
+
+.side-top-bar {
+  background: #1583ff;
+  color: #fff;
+  padding: 10px 16px;
+}
+.side-logo {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.side-tab-row {
+  display: flex;
+  border-bottom: 1px solid #dde6f5;
+  background: #eef4ff;
+}
+.side-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+  color: #567;
+}
+.side-tab.active {
+  background: #fff;
+  font-weight: 800;
+  color: #1583ff;
+  border-bottom: 2px solid #1583ff;
+}
+
+.side-pane {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hidden {
+  display: none;
+}
+
+.side-search {
+  display: flex;
+  padding: 10px 12px;
+  gap: 6px;
+  border-bottom: 1px solid #dde6f5;
+}
+#search-input {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #c5d5f2;
+  font-size: 13px;
+}
+#search-btn {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  background: #1583ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.side-info {
+  padding: 10px 16px;
+  overflow: auto;
+  font-size: 12px;
+}
+.side-info.small {
+  padding-top: 4px;
+}
+.side-info h4 {
+  margin: 8px 0 4px;
+  font-size: 13px;
+}
+.side-info p {
+  margin: 0 0 6px;
+  color: #444;
+}
+
+/* 길찾기 */
+.route-form {
+  padding: 10px 12px;
+  border-bottom: 1px solid #dde6f5;
+  font-size: 13px;
+}
+.route-label {
+  display: block;
+  margin-bottom: 6px;
+}
+.route-label span {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+.route-input-wrap {
+  display: flex;
+  gap: 4px;
+}
+.route-input-wrap input {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #c5d5f2;
+  font-size: 13px;
+}
+.route-pick {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #c5d5f2;
+  background: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.route-mode {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.route-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+#route-btn,
+#route-reset-btn {
+  flex: 1;
+  padding: 7px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#route-btn {
+  background: #23c26b;
+  color: #fff;
+}
+#route-reset-btn {
+  background: #e5e7eb;
+  color: #333;
+}
+#route-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+#map {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+/* 우클릭 메뉴 */
+#map-context-menu {
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  min-width: 140px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+#map-context-menu button {
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 8px;
+  background: #ffcc00;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* ===== Weather / Umbrella 카드 ===== */
+.ui-card {
+  position: absolute;
+  width: 436px;
+  height: 436px;
+  background: #fff;
+  border-radius: 70px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.weather-card {
+  left: 1009px;
+  top: 116px;
+}
+.umbrella-card {
+  left: 1454px;
+  top: 116px;
+}
+
+.ui-title {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #1f5a66;
+  white-space: nowrap;
+}
+
+.ui-center {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ui-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ===== Bookmark 카드 ===== */
+.bookmark-card {
+  position: absolute;
+  left: 1009px;
+  top: 572px;
+  width: 881px;
+  height: 478px;
+  background: #d9d9d9;
+  border-radius: 70px;
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.bookmark-title {
+  position: absolute;
+  left: 70px;
+  top: 32px;
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  color: #1f5a66;
+  white-space: nowrap;
+}
+
+.bookmark-inner {
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  top: 120px;
+  bottom: 50px;
+  background: #fff;
+  border-radius: 24px;
+  border: 3px solid rgba(0, 0, 0, 0.18);
+  overflow: auto;
+  padding: 12px 28px 12px 18px; /* 스크롤바 공간 */
+}
+
+/* ===== 즐겨찾기 리스트 ===== */
+#favorite-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 78px; /* ✅ 겹침 방지 핵심 */
+}
+
+.favorite-main {
+  flex: 1;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.favorite-title {
+  display: block;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.favorite-address {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ✅ 오른쪽: 아이콘 + 버튼(겹침 방지) */
+.favorite-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex: 0 0 180px;
+  min-width: 180px;
+}
+
+.favorite-weather-icon {
+  width: 56px; /* ✅ “좀만 더 크게” */
+  height: 56px;
+  object-fit: contain;
+  flex: 0 0 56px;
+  opacity: 0.95;
+}
+
+.favorite-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 80px;
+}
+
+.favorite-edit,
+.favorite-remove {
+  border: none;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 0;
+  text-align: right;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.favorite-edit:hover,
+.favorite-remove:hover {
+  color: #ff4d4f;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rain No - Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ✅ 1920x1080 캔버스(화면에 꽉 차게 scale) -->
+    <div class="page-canvas">
+      <img src="background/1-1.png" alt="background" class="page-bg" />
+
+      <div class="app">
+        <!-- ===== MAP CARD ===== -->
+        <section class="map-card">
+          <!-- 왼쪽 패널 -->
+          <div class="map-side-panel">
+            <div class="side-top-bar">
+              <span class="side-logo">kakaomap</span>
+            </div>
+
+            <div class="side-tab-row">
+              <button class="side-tab active" data-tab="search" type="button">
+                검색
+              </button>
+              <button class="side-tab" data-tab="route" type="button">
+                길찾기
+              </button>
+            </div>
+
+            <!-- 검색 탭 -->
+            <div class="side-pane" id="pane-search">
+              <div class="side-search">
+                <input
+                  id="search-input"
+                  type="text"
+                  placeholder="장소, 주소, 버스 검색"
+                />
+                <button id="search-btn" type="button">검색</button>
+              </div>
+
+              <div class="side-info">
+                <h4>즐겨찾기 안내</h4>
+                <p>
+                  지도 위에서 <b>마우스 우클릭</b> → <b>즐겨찾기 추가</b><br />
+                  오른쪽 아래 Bookmark 카드에서 전체 목록을 확인할 수 있어요.
+                </p>
+              </div>
+            </div>
+
+            <!-- 길찾기 탭 -->
+            <div class="side-pane hidden" id="pane-route">
+              <div class="route-form">
+                <label class="route-label">
+                  <span>출발</span>
+                  <div class="route-input-wrap">
+                    <input
+                      id="route-from"
+                      type="text"
+                      placeholder="출발지 주소 또는 장소"
+                    />
+                    <button class="route-pick" data-target="from" type="button">
+                      지도에서
+                    </button>
+                  </div>
+                </label>
+
+                <label class="route-label">
+                  <span>도착</span>
+                  <div class="route-input-wrap">
+                    <input
+                      id="route-to"
+                      type="text"
+                      placeholder="도착지 주소 또는 장소"
+                    />
+                    <button class="route-pick" data-target="to" type="button">
+                      지도에서
+                    </button>
+                  </div>
+                </label>
+
+                <div class="route-mode">
+                  <label>
+                    <input type="radio" name="route-mode" value="car" checked />
+                    자동차
+                  </label>
+                  <label>
+                    <input type="radio" name="route-mode" value="walk" /> 도보
+                  </label>
+                </div>
+
+                <div class="route-actions">
+                  <button id="route-btn" type="button">길찾기</button>
+                  <button id="route-reset-btn" type="button">초기화</button>
+                </div>
+
+                <div id="route-info"></div>
+              </div>
+
+              <div class="side-info small">
+                <h4>길찾기 안내</h4>
+                <p>
+                  지금 버전은 직선 연결 + 거리/시간만 표시합니다.<br />
+                  (나중에 실제 경로 API로 교체 가능)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 지도 -->
+          <div id="map"></div>
+
+          <!-- 우클릭 메뉴 -->
+          <div id="map-context-menu">
+            <button id="btn-add-favorite" type="button">⭐ 즐겨찾기 추가</button>
+          </div>
+        </section>
+
+        <!-- ===== WEATHER CARD ===== -->
+        <section class="ui-card weather-card">
+          <div class="ui-title">Weather</div>
+          <div class="ui-center">
+            <img
+              id="weather-main-icon"
+              class="ui-icon"
+              src="weather icon/0.png"
+              alt="weather"
+            />
+          </div>
+          <!-- ✅ 요청대로 텍스트(Seoul/체감 등) 없음 -->
+        </section>
+
+        <!-- ===== UMBRELLA CARD ===== -->
+        <section class="ui-card umbrella-card">
+          <div class="ui-title">Umbrella</div>
+          <div class="ui-center">
+            <img
+              id="umbrella-main-icon"
+              class="ui-icon"
+              src="umbrella icon/0.png"
+              alt="umbrella"
+            />
+          </div>
+        </section>
+
+        <!-- ===== BOOKMARK CARD ===== -->
+        <section class="bookmark-card">
+          <div class="bookmark-title">Bookmark</div>
+
+          <div class="bookmark-inner">
+            <ul id="favorite-list"></ul>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ✅ 카카오맵 SDK (services, geometry 필요) -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e020f7f78c7769cff1638159ba42ed29&libraries=services,geometry"></script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
